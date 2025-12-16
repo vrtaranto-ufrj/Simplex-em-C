@@ -4,13 +4,7 @@
 
 #include "utils.h"
 
-typedef struct VetorStruct Vetor;
 typedef struct MatrizStruct Matriz;
-
-struct VetorStruct {
-    float *dados;
-    size_t tamanho;
-};
 
 struct MatrizStruct {
     float *dados;
@@ -18,8 +12,13 @@ struct MatrizStruct {
     size_t colunas;
 };
 
-erro inicializa_vetor(Vetor *vetor, size_t tamanho);
-void free_vetor(Vetor *vetor);
-
 erro inicializa_matriz(Matriz *matriz, size_t linhas, size_t colunas);
 void free_matriz(Matriz *matriz);
+
+float get_matriz(Matriz *matriz, size_t x, size_t y);
+void set_soma_matriz(Matriz *matriz, size_t x, size_t y, float valor);
+void set_matriz(Matriz *matriz, size_t x, size_t y, float valor);
+
+void multiplica_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado);
+
+void print_matriz(Matriz *matriz);

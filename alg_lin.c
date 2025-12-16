@@ -1,21 +1,9 @@
 #include <stdlib.h>
+#include <assert.h>
+#include <stdio.h>
 
 #include "utils.h"
 #include "alg_lin.h"
-
-erro inicializa_vetor(Vetor *vetor, size_t tamanho) {
-    vetor->dados = (float *) calloc(tamanho, sizeof(float));
-    if (vetor->dados == NULL) {
-        return MALLOC;
-    }
-    vetor->tamanho = tamanho;
-
-    return SUCESSO;
-}
-
-void free_vetor(Vetor *vetor) {
-    free(vetor->dados);
-}
 
 erro inicializa_matriz(
     Matriz *matriz,
@@ -35,4 +23,43 @@ erro inicializa_matriz(
 
 void free_matriz(Matriz *matriz) {
     free(matriz->dados);
+}
+
+float get_matriz(Matriz *matriz, size_t x, size_t y) {
+    return matriz->dados[y + x * matriz->colunas];
+}
+
+void set_matriz(Matriz *matriz, size_t x, size_t y, float valor) {
+    matriz->dados[y + x * matriz->colunas] = valor;
+}
+
+void set_soma_matriz(Matriz *matriz, size_t x, size_t y, float valor) {
+    matriz->dados[y + x * matriz->colunas] += valor;
+}
+
+void multiplica_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado) {
+    assert(matriz1->colunas == matriz2->linhas);
+
+    for (size_t j = 0; j < matriz2->colunas; j++) {
+        for (size_t k = 0; k < matriz1->colunas; k++) {
+            for (size_t i = 0; i < matriz1->linhas; i++) {
+                set_soma_matriz(
+                    matriz_resultado,
+                    i,
+                    j, 
+                    get_matriz(matriz1, i, k) * get_matriz(matriz2, k, j)
+                );
+            }
+        }
+    }
+    
+}
+
+void print_matriz(Matriz *matriz) {
+    for (size_t i = 0; i < matriz->linhas; i++) {
+        for (size_t j = 0; j < matriz->colunas; j++) {
+            printf("%.2f ", get_matriz(matriz, i, j));
+        }
+        printf("\n");
+    }
 }
