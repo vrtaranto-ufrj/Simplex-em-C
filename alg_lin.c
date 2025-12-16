@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "utils.h"
 #include "alg_lin.h"
@@ -23,6 +24,14 @@ erro inicializa_matriz(
 
 void free_matriz(Matriz *matriz) {
     free(matriz->dados);
+}
+
+void set_zero_matriz(Matriz *matriz) {
+    memset(
+        matriz->dados,
+        0,
+        matriz->linhas * matriz->colunas * sizeof(float)
+    );
 }
 
 float get_matriz(Matriz *matriz, size_t x, size_t y) {
@@ -53,6 +62,38 @@ void multiplica_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultad
         }
     }
     
+}
+
+void soma_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado) {
+    assert(matriz1->linhas == matriz2->linhas);
+    assert(matriz1->colunas == matriz2->colunas);
+
+    for (size_t j = 0; j < matriz1->colunas; j++) {
+        for (size_t i = 0; i < matriz1->linhas; i++) {
+            set_soma_matriz(
+                matriz_resultado,
+                i,
+                j, 
+                get_matriz(matriz1, i, j) + get_matriz(matriz2, i, j)
+            );
+        }
+    } 
+}
+
+void subtrai_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado) {
+    assert(matriz1->linhas == matriz2->linhas);
+    assert(matriz1->colunas == matriz2->colunas);
+
+    for (size_t j = 0; j < matriz1->colunas; j++) {
+        for (size_t i = 0; i < matriz1->linhas; i++) {
+            set_soma_matriz(
+                matriz_resultado,
+                i,
+                j, 
+                get_matriz(matriz1, i, j) - get_matriz(matriz2, i, j)
+            );
+        }
+    } 
 }
 
 void print_matriz(Matriz *matriz) {
