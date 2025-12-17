@@ -34,11 +34,11 @@ void set_zero_matriz(Matriz *matriz) {
     );
 }
 
-void copia_matriz(Matriz *origem, Matriz *destino) {
+void copia_matriz(Matriz *destino, Matriz *origem) {
     assert(origem->linhas == destino->linhas);
     assert(origem->colunas == destino->colunas);
 
-    memcpy(destino, origem, origem->linhas * origem->colunas);
+    memcpy(destino->dados, origem->dados, origem->linhas * origem->colunas * sizeof(float));
 }
 
 float get_matriz(Matriz *matriz, size_t x, size_t y) {

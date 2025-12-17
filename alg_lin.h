@@ -15,7 +15,7 @@ struct MatrizStruct {
 erro inicializa_matriz(Matriz *matriz, size_t linhas, size_t colunas);
 void free_matriz(Matriz *matriz);
 void set_zero_matriz(Matriz *matriz);
-void copia_matriz(Matriz *origem, Matriz *destino);
+void copia_matriz(Matriz *destino, Matriz *origem);
 
 float get_matriz(Matriz *matriz, size_t x, size_t y);
 void set_soma_matriz(Matriz *matriz, size_t x, size_t y, float valor);
