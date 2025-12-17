@@ -3,12 +3,15 @@
 #include "alg_lin.h"
 
 int main(void) {
-    Matriz matriz1, matriz2, matriz3;
+    Matriz matriz1, matriz2, matriz3, x, b;
 
     inicializa_matriz(&matriz1, 3, 3);
     inicializa_matriz(&matriz2, 3, 3);
     inicializa_matriz(&matriz3, 3, 3);
+    inicializa_matriz(&x, 3, 1);
+    inicializa_matriz(&b, 3, 1);
     
+    // matriz1
     set_matriz(&matriz1, 0, 0, 1);
     set_matriz(&matriz1, 1, 0, 4);
     set_matriz(&matriz1, 2, 0, 4);
@@ -21,20 +24,11 @@ int main(void) {
     set_matriz(&matriz1, 1, 2, 2);
     set_matriz(&matriz1, 2, 2, 4);
 
+    // b
+    set_matriz(&b, 0, 0, 3);
+    set_matriz(&b, 1, 0, 6);
+    set_matriz(&b, 2, 0, 10);
 
-    set_matriz(&matriz2, 0, 0, 0);
-    set_matriz(&matriz2, 1, 0, 1);
-    set_matriz(&matriz2, 2, 0, 2);
-
-    set_matriz(&matriz2, 0, 1, 3);
-    set_matriz(&matriz2, 1, 1, 4);
-    set_matriz(&matriz2, 2, 1, 5);
-
-    set_matriz(&matriz2, 0, 1, 6);
-    set_matriz(&matriz2, 1, 1, 7);
-    set_matriz(&matriz2, 2, 1, 8);
-    
-    soma_matriz(&matriz1, &matriz2, &matriz3);
 
     print_matriz(&matriz1);
     printf("\n");
@@ -50,9 +44,19 @@ int main(void) {
     print_matriz(&matriz2);
     printf("\n");
 
+    resolve_l(&matriz1, &x, &b);
+    print_matriz(&x);
+    printf("\n");
+
+    resolve_u(&matriz2, &x, &x);
+    print_matriz(&x);
+    printf("\n");
+
     free_matriz(&matriz1);
     free_matriz(&matriz2);
     free_matriz(&matriz3);
+    free_matriz(&x);
+    free_matriz(&b);
 
     return 0;
 }

@@ -172,6 +172,54 @@ void transforma_u_matriz(Matriz *LU) {
     }
 }
 
+void resolve_l(Matriz *L, Vetor *x, Vetor *b) {
+    size_t n = x->linhas;
+
+    set_matriz(
+        x,
+        0,
+        0,
+        get_matriz(b, 0, 0) / get_matriz(L, 0, 0)
+    );
+
+    for (size_t i = 1; i < n; i++) {
+        float soma = 0;
+        for (size_t j = 0; j < i; j++) {
+            soma += get_matriz(L, i, j) * get_matriz(x, j, 0);
+        }
+        set_matriz(
+            x,
+            i,
+            0,
+            (get_matriz(b, i, 0) - soma)
+        ); 
+    }
+}
+
+void resolve_u(Matriz *U, Vetor *x, Vetor *b) {
+    size_t n = x->linhas;
+
+    set_matriz(
+        x,
+        n - 1,
+        0,
+        get_matriz(b, n - 1, 0) / get_matriz(U, n - 1, n - 1)
+    );
+
+    for (size_t i = n - 1; i-- > 0; ) {
+        float soma = 0;
+        for (size_t j = i + 1; j < n; j++) {
+            soma += get_matriz(U, i, j) * get_matriz(x, j, 0);
+        }
+        set_matriz(
+            x,
+            i,
+            0,
+            (get_matriz(b, i, 0) - soma)  / get_matriz(U, i, i)
+        ); 
+    }
+}
+
 void print_matriz(Matriz *matriz) {
     for (size_t i = 0; i < matriz->linhas; i++) {
         for (size_t j = 0; j < matriz->colunas; j++) {

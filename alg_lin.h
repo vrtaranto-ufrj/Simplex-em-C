@@ -5,6 +5,7 @@
 #include "utils.h"
 
 typedef struct MatrizStruct Matriz;
+typedef Matriz Vetor;
 
 struct MatrizStruct {
     float *dados;
@@ -28,5 +29,8 @@ void subtrai_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado);
 void transforma_lu_matriz(Matriz *A);
 void transforma_l_matriz(Matriz *LU);
 void transforma_u_matriz(Matriz *LU);
+
+void resolve_l(Matriz *L, Vetor *x, Vetor *b);
+void resolve_u(Matriz *U, Vetor *x, Vetor *b);
 
 void print_matriz(Matriz *matriz);
