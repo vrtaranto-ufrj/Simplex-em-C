@@ -223,7 +223,7 @@ void resolve_u(Matriz *U, Vetor *x, Vetor *b) {
 void inverte_matriz(Matriz *A, Matriz *A_inv) {
     size_t n = A->linhas;
     Matriz LU, L, U;
-    Vetor e, y, x;
+    Vetor e, x;
     
     // 1. Copia A e faz decomposição LU
     inicializa_matriz(&LU, n, n);
