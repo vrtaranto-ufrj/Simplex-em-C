@@ -96,6 +96,31 @@ void subtrai_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado) 
     } 
 }
 
+void transforma_lu_matriz(Matriz *A) {
+    size_t n = A->linhas;
+
+    for (size_t k = 0; k < n - 1; k++) {
+        for (size_t i = k + 1; i < n; i++) {
+            set_matriz(
+                A,
+                i,
+                k,
+                get_matriz(A, i, k) / get_matriz(A, k, k)
+            );
+        }
+        for (size_t i = k + 1; i < n; i++) {
+            for (size_t j = k + 1; j < n; j++) {
+                set_matriz(
+                    A,
+                    i,
+                    j,
+                    get_matriz(A, i, j) - get_matriz(A, i, k) * get_matriz(A, k, j)
+                );
+            } 
+        }
+    }
+}
+
 void print_matriz(Matriz *matriz) {
     for (size_t i = 0; i < matriz->linhas; i++) {
         for (size_t j = 0; j < matriz->colunas; j++) {

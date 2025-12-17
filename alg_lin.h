@@ -24,4 +24,6 @@ void multiplica_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultad
 void soma_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado);
 void subtrai_matriz(Matriz *matriz1, Matriz *matriz2, Matriz *matriz_resultado);
 
+void transforma_lu_matriz(Matriz *A);
+
 void print_matriz(Matriz *matriz);
