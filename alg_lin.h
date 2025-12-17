@@ -33,4 +33,6 @@ void transforma_u_matriz(Matriz *LU);
 void resolve_l(Matriz *L, Vetor *x, Vetor *b);
 void resolve_u(Matriz *U, Vetor *x, Vetor *b);
 
+void inverte_matriz(Matriz *A, Matriz *A_inv);
+
 void print_matriz(Matriz *matriz);

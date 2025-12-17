@@ -220,10 +220,56 @@ void resolve_u(Matriz *U, Vetor *x, Vetor *b) {
     }
 }
 
+void inverte_matriz(Matriz *A, Matriz *A_inv) {
+    size_t n = A->linhas;
+    Matriz LU, L, U;
+    Vetor e, y, x;
+    
+    // 1. Copia A e faz decomposição LU
+    inicializa_matriz(&LU, n, n);
+    copia_matriz(&LU, A);
+    transforma_lu_matriz(&LU);
+    
+    // 2. Extrai L e U
+    inicializa_matriz(&L, n, n);
+    inicializa_matriz(&U, n, n);
+    copia_matriz(&L, &LU);
+    copia_matriz(&U, &LU);
+    transforma_l_matriz(&L);
+    transforma_u_matriz(&U);
+    
+    // 3. Vetores auxiliares
+    inicializa_matriz(&e, n, 1);
+    inicializa_matriz(&y, n, 1);
+    inicializa_matriz(&x, n, 1);
+    
+    // 4. Para cada coluna j
+    for (size_t j = 0; j < n; j++) {
+        set_zero_matriz(&e);
+        set_matriz(&e, j, 0, 1.0);  // e_j
+        
+        resolve_l(&L, &y, &e);      // Ly = e_j
+        resolve_u(&U, &x, &y);      // Ux = y
+        
+        // Copia x para coluna j de A_inv
+        for (size_t i = 0; i < n; i++) {
+            set_matriz(A_inv, i, j, get_matriz(&x, i, 0));
+        }
+    }
+    
+    // Libera memória
+    free_matriz(&LU);
+    free_matriz(&L);
+    free_matriz(&U);
+    free_matriz(&e);
+    free_matriz(&y);
+    free_matriz(&x);
+}
+
 void print_matriz(Matriz *matriz) {
     for (size_t i = 0; i < matriz->linhas; i++) {
         for (size_t j = 0; j < matriz->colunas; j++) {
-            printf("%.2f ", get_matriz(matriz, i, j));
+            printf("%.4f ", get_matriz(matriz, i, j));
         }
         printf("\n");
     }

@@ -3,60 +3,48 @@
 #include "alg_lin.h"
 
 int main(void) {
-    Matriz matriz1, matriz2, matriz3, x, b;
+    Matriz A, A_inv;
 
-    inicializa_matriz(&matriz1, 3, 3);
-    inicializa_matriz(&matriz2, 3, 3);
-    inicializa_matriz(&matriz3, 3, 3);
-    inicializa_matriz(&x, 3, 1);
-    inicializa_matriz(&b, 3, 1);
+    inicializa_matriz(&A, 4, 4);
+    inicializa_matriz(&A_inv, 4, 4);
     
-    // matriz1
-    set_matriz(&matriz1, 0, 0, 1);
-    set_matriz(&matriz1, 1, 0, 4);
-    set_matriz(&matriz1, 2, 0, 4);
+    // Matriz A (4x4)
+    // | 1  2  3  4 |
+    // | 2  3  4  1 |
+    // | 3  4  1  2 |
+    // | 4  1  2  3 |
+    set_matriz(&A, 0, 0, 1);
+    set_matriz(&A, 0, 1, 2);
+    set_matriz(&A, 0, 2, 3);
+    set_matriz(&A, 0, 3, 4);
 
-    set_matriz(&matriz1, 0, 1, 2);
-    set_matriz(&matriz1, 1, 1, 4);
-    set_matriz(&matriz1, 2, 1, 6);
+    set_matriz(&A, 1, 0, 2);
+    set_matriz(&A, 1, 1, 3);
+    set_matriz(&A, 1, 2, 4);
+    set_matriz(&A, 1, 3, 1);
 
-    set_matriz(&matriz1, 0, 2, 2);
-    set_matriz(&matriz1, 1, 2, 2);
-    set_matriz(&matriz1, 2, 2, 4);
+    set_matriz(&A, 2, 0, 3);
+    set_matriz(&A, 2, 1, 4);
+    set_matriz(&A, 2, 2, 1);
+    set_matriz(&A, 2, 3, 2);
 
-    // b
-    set_matriz(&b, 0, 0, 3);
-    set_matriz(&b, 1, 0, 6);
-    set_matriz(&b, 2, 0, 10);
+    set_matriz(&A, 3, 0, 4);
+    set_matriz(&A, 3, 1, 1);
+    set_matriz(&A, 3, 2, 2);
+    set_matriz(&A, 3, 3, 3);
 
-
-    print_matriz(&matriz1);
+    printf("Matriz Original A:\n");
+    print_matriz(&A);
     printf("\n");
 
-    transforma_lu_matriz(&matriz1);
-    copia_matriz(&matriz2, &matriz1);
+    inverte_matriz(&A, &A_inv);
 
-    transforma_l_matriz(&matriz1);
-    print_matriz(&matriz1);
+    printf("Matriz Inversa A^(-1):\n");
+    print_matriz(&A_inv);
     printf("\n");
 
-    transforma_u_matriz(&matriz2);
-    print_matriz(&matriz2);
-    printf("\n");
-
-    resolve_l(&matriz1, &x, &b);
-    print_matriz(&x);
-    printf("\n");
-
-    resolve_u(&matriz2, &x, &x);
-    print_matriz(&x);
-    printf("\n");
-
-    free_matriz(&matriz1);
-    free_matriz(&matriz2);
-    free_matriz(&matriz3);
-    free_matriz(&x);
-    free_matriz(&b);
+    free_matriz(&A);
+    free_matriz(&A_inv);
 
     return 0;
 }
