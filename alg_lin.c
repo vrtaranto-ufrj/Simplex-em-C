@@ -240,7 +240,6 @@ void inverte_matriz(Matriz *A, Matriz *A_inv) {
     
     // 3. Vetores auxiliares
     inicializa_matriz(&e, n, 1);
-    inicializa_matriz(&y, n, 1);
     inicializa_matriz(&x, n, 1);
     
     // 4. Para cada coluna j
@@ -248,8 +247,8 @@ void inverte_matriz(Matriz *A, Matriz *A_inv) {
         set_zero_matriz(&e);
         set_matriz(&e, j, 0, 1.0);  // e_j
         
-        resolve_l(&L, &y, &e);      // Ly = e_j
-        resolve_u(&U, &x, &y);      // Ux = y
+        resolve_l(&L, &x, &e);      // Ly = e_j
+        resolve_u(&U, &x, &x);      // Ux = y
         
         // Copia x para coluna j de A_inv
         for (size_t i = 0; i < n; i++) {
@@ -262,7 +261,6 @@ void inverte_matriz(Matriz *A, Matriz *A_inv) {
     free_matriz(&L);
     free_matriz(&U);
     free_matriz(&e);
-    free_matriz(&y);
     free_matriz(&x);
 }
 
