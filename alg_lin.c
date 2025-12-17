@@ -34,6 +34,13 @@ void set_zero_matriz(Matriz *matriz) {
     );
 }
 
+void copia_matriz(Matriz *origem, Matriz *destino) {
+    assert(origem->linhas == destino->linhas);
+    assert(origem->colunas == destino->colunas);
+
+    memcpy(destino, origem, origem->linhas * origem->colunas);
+}
+
 float get_matriz(Matriz *matriz, size_t x, size_t y) {
     return matriz->dados[y + x * matriz->colunas];
 }
@@ -117,6 +124,50 @@ void transforma_lu_matriz(Matriz *A) {
                     get_matriz(A, i, j) - get_matriz(A, i, k) * get_matriz(A, k, j)
                 );
             } 
+        }
+    }
+}
+
+void transforma_l_matriz(Matriz *LU) {
+    for (size_t j = 0; j < LU->colunas; j++) {
+        for (size_t i = 0; i < LU->linhas; i++) {
+            float valor;
+
+            if (i == j) {
+                valor = 1;
+            } else if (j > i) {
+                valor = 0;
+            } else {
+                valor = get_matriz(LU, i, j);
+            }
+            
+            set_matriz(
+                LU,
+                i,
+                j,
+                valor
+            );
+        }
+    }
+}
+
+void transforma_u_matriz(Matriz *LU) {
+    for (size_t j = 0; j < LU->colunas; j++) {
+        for (size_t i = 0; i < LU->linhas; i++) {
+            float valor;
+
+            if (i > j) {
+                valor = 0;
+            } else {
+                valor = get_matriz(LU, i, j);
+            }
+            
+            set_matriz(
+                LU,
+                i,
+                j,
+                valor
+            );
         }
     }
 }

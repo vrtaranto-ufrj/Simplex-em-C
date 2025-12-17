@@ -36,11 +36,14 @@ int main(void) {
     
     soma_matriz(&matriz1, &matriz2, &matriz3);
 
-    print_matriz(&matriz1);
+    // print_matriz(&matriz1);
 
     transforma_lu_matriz(&matriz1);
 
     // set_zero_matriz(&matriz3);
+    print_matriz(&matriz1);
+
+    transforma_u_matriz(&matriz1);
     print_matriz(&matriz1);
 
     free_matriz(&matriz1);
